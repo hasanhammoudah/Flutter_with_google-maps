@@ -22,7 +22,11 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
         35.989721,
       ),
     );
-    initMarkers();
+    //  initMarkers();
+    // initPolyLines();
+    // initPolygons();
+    initCircles();
+
     super.initState();
   }
 
@@ -34,10 +38,16 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
 
   late GoogleMapController googleMapController;
   Set<Marker> markers = {};
+  Set<Polyline> polyLines = {};
+  Set<Polygon> polygons = {};
+  Set<Circle> circles = {};
   @override
   Widget build(BuildContext context) {
     // TODO Part two
     return GoogleMap(
+      //  polygons: polygons,
+      //  polylines: polyLines,
+      circles: circles,
       zoomControlsEnabled: false,
       markers: markers,
       onMapCreated: (controller) {
@@ -125,6 +135,25 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
     //   var customMarkerIcon = await BitmapDescriptor.fromAssetImage(
     //  ImageConfiguration(),'assets/images/marker.png');
 
+    //TODO Another way to show markers for for Loop
+    // Set<Marker> mymarkers = {};
+    // for (var placeModel in places) {
+    //   mymarkers.add(
+    //     Marker(
+    //       icon: customMarkerIcon,
+    //       // infoWindow: InfoWindow(
+    //       //   title: placeModel.name,
+    //       // ),
+    //       position: placeModel.latLng,
+    //       markerId: MarkerId(
+    //         placeModel.id.toString(),
+    //       ),
+    //     ),
+    //   );
+    //   markers.addAll(mymarkers);
+    //   setState(() {});
+    // }
+
     var myMarkers = places
         .map(
           (placeModel) => Marker(
@@ -141,6 +170,70 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
         .toSet();
     markers.addAll(myMarkers);
     setState(() {});
+  }
+
+  void initPolyLines() {
+    Polyline polyline = const Polyline(
+        geodesic: true,
+        polylineId: PolylineId('1'),
+        startCap: Cap.roundCap,
+        color: Colors.red,
+        width: 5,
+        zIndex: 2,
+        patterns: [
+          PatternItem.dot,
+        ],
+        points: [
+          LatLng(31.993949018390282, 35.85668346935888),
+          LatLng(31.981719, 35.817030),
+          LatLng(31.975603, 35.846384),
+          LatLng(31.958127697085196, 35.871274686253436),
+        ]);
+    Polyline polyline2 = const Polyline(
+        polylineId: PolylineId('2'),
+        startCap: Cap.roundCap,
+        color: Colors.black,
+        width: 5,
+        zIndex: 1,
+        points: [
+          LatLng(31.996213, 35.988240),
+          LatLng(31.994202064101074, 35.985200134917285),
+        ]);
+    polyLines.add(polyline);
+    polyLines.add(polyline2);
+  }
+
+  void initPolygons() {
+    Polygon polygon = Polygon(
+      // This holes to hide points or custom shape
+      holes: const [
+        [
+          LatLng(31.951615, 35.936247),
+          LatLng(31.944942, 35.932915),
+          LatLng(31.962020, 35.947311),
+          LatLng(31.941435, 35.941179),
+        ]
+      ],
+      strokeWidth: 3,
+      fillColor: Colors.black.withOpacity(.5),
+      polygonId: PolygonId('1'),
+      points: const [
+        LatLng(31.959871, 35.865864),
+        LatLng(31.975703, 35.903722),
+        LatLng(31.957610, 35.960241),
+      ],
+    );
+    polygons.add(polygon);
+  }
+
+  void initCircles() {
+    Circle circle = Circle(
+      circleId: CircleId('1'),
+      radius: 10000,
+      fillColor: Colors.black.withOpacity(.5),
+      center: const LatLng(31.945506345113987, 35.92742700065387),
+    );
+    circles.add(circle);
   }
 }
 
