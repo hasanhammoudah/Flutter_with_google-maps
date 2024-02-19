@@ -1,12 +1,9 @@
 # google_maps
 
-** Resources::-
-
-https://stylist.atlist.com/
-
-https://pub.dev/packages/google_maps_flutter
-
-https://pub.dev/packages/location
+## Resources::-
+[OpenAI](https://stylist.atlist.com/)
+[OpenAI](https://pub.dev/packages/google_maps_flutter)
+[OpenAI](https://pub.dev/packages/location)
 
 ## Topics Included
 
