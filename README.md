@@ -19,34 +19,23 @@ https://pub.dev/packages/location
 - **Circles:** Draw circular overlays on the map to represent areas of interest with a specific radius.
 
 
-** To Generate SHA-1 key put this in terminal::-
+## To Generate SHA-1 key, run this command in the terminal:
 
+```bash
 ./gradlew signingReport
 
 
-
-** Note this line for zoom attribute maps(google_maps_flutter package):
-
-// world view 0 -> 3
-
-// country view 4 -> 6
-
-// city view 10 -> 12
-
-// street view 13 -> 17
-
-// building view 18 -> 20
-
-
-** Note Steps that must be taken in order to obtain a user location (location package)::-
-
-// inquire about location service
-
-// request permission
-
-// get location
-
-// display
+Note the following line for the zoom attribute in maps (google_maps_flutter package):
+World view: 0 to 3
+Country view: 4 to 6
+City view: 10 to 12
+Street view: 13 to 17
+Building view: 18 to 20
+Note the steps that must be taken in order to obtain a user location (location package):
+Inquire about location service.
+Request permission.
+Get location.
+Display.
 
 
 
