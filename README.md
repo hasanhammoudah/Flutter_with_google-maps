@@ -24,18 +24,11 @@ https://pub.dev/packages/location
 ```bash
 ./gradlew signingReport
 
+bash```
 
-Note the following line for the zoom attribute in maps (google_maps_flutter package):
-World view: 0 to 3
-Country view: 4 to 6
-City view: 10 to 12
-Street view: 13 to 17
-Building view: 18 to 20
-Note the steps that must be taken in order to obtain a user location (location package):
-Inquire about location service.
-Request permission.
-Get location.
-Display.
+
+
+
 
 
 
