@@ -2,7 +2,9 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps/models/place_model.dart';
+import 'package:google_maps/utils/location_service.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 class CustomGoogleMap extends StatefulWidget {
   const CustomGoogleMap({super.key});
@@ -13,6 +15,8 @@ class CustomGoogleMap extends StatefulWidget {
 
 class _CustomGoogleMapState extends State<CustomGoogleMap> {
   late CameraPosition initialCameraPosition;
+  late LocationService locationService;
+
   @override
   void initState() {
     initialCameraPosition = const CameraPosition(
@@ -25,18 +29,20 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
     //  initMarkers();
     // initPolyLines();
     // initPolygons();
-    initCircles();
-
+    // initCircles();
+    locationService = LocationService();
+    updateMyLocation();
     super.initState();
   }
 
   @override
   void dispose() {
-    googleMapController.dispose();
+    googleMapController?.dispose();
     super.dispose();
   }
 
-  late GoogleMapController googleMapController;
+  GoogleMapController? googleMapController;
+  bool isFirstCall = true;
   Set<Marker> markers = {};
   Set<Polyline> polyLines = {};
   Set<Polygon> polygons = {};
@@ -47,7 +53,7 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
     return GoogleMap(
       //  polygons: polygons,
       //  polylines: polyLines,
-      circles: circles,
+      // circles: circles,
       zoomControlsEnabled: false,
       markers: markers,
       onMapCreated: (controller) {
@@ -108,7 +114,7 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
   void initMapStyle() async {
     var nightMapStyle = await DefaultAssetBundle.of(context)
         .loadString('assets/map_styles/night_map_style.json');
-    googleMapController.setMapStyle(nightMapStyle);
+    googleMapController?.setMapStyle(nightMapStyle);
   }
 
   // To control the size of markers
@@ -234,6 +240,46 @@ class _CustomGoogleMapState extends State<CustomGoogleMap> {
       center: const LatLng(31.945506345113987, 35.92742700065387),
     );
     circles.add(circle);
+  }
+
+  void updateMyLocation() async {
+    await locationService.checkAndRequestLocationService();
+    var hasPermission =
+        await locationService.checkAndRequestLocationPermission();
+    if (hasPermission) {
+      locationService.getRealTimeLocationData((locationData) {
+        updateMyCamera(locationData);
+        setMyCameraPosition(locationData);
+      });
+    } else {}
+  }
+
+  void setMyCameraPosition(LocationData locationData) {
+    var cameraPosition = CameraPosition(
+      target: LatLng(locationData.latitude!, locationData.longitude!),
+      zoom: 15,
+    );
+    if (isFirstCall) {
+      googleMapController?.animateCamera(CameraUpdate.newLatLng(
+        LatLng(
+          locationData.latitude!,
+          locationData.longitude!,
+        ),
+      ));
+      isFirstCall = false;
+    } else {
+      googleMapController
+          ?.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+    }
+  }
+
+  void updateMyCamera(LocationData locationData) {
+    var myLocationMraker = Marker(
+      markerId: MarkerId('my_marker_1'),
+      position: LatLng(locationData.latitude!, locationData.longitude!),
+    );
+    markers.add(myLocationMraker);
+    setState(() {});
   }
 }
 
