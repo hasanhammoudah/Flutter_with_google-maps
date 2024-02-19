@@ -50,6 +50,6 @@ Note:- the steps that must be taken in order to obtain a user location (location
 
 
 
-
+## A image of the project 
 
 ![Code Snippet](assets/images/screenshot-1708342812531.png)
