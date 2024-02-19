@@ -38,6 +38,17 @@ Note the following line for the zoom attribute in maps (google_maps_flutter pack
 &middot; Building view: 18 to 20
 
 
+Note the steps that must be taken in order to obtain a user location (location package):
+
+1.Inquire about location service.
+
+2.Request permission.
+
+3.Get location.
+
+4.Display.
+
+
 
 
 
