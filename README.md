@@ -25,7 +25,7 @@ https://pub.dev/packages/location
 ./gradlew signingReport
 ``` 
 
-Note the following line for the zoom attribute in maps (google_maps_flutter package):
+Note:- the following line for the zoom attribute in maps (google_maps_flutter package)=>
 
 &middot; World view: 0 to 3
 
@@ -38,7 +38,7 @@ Note the following line for the zoom attribute in maps (google_maps_flutter pack
 &middot; Building view: 18 to 20
 
 
-Note the steps that must be taken in order to obtain a user location (location package):
+Note:- the steps that must be taken in order to obtain a user location (location package)=>
 
 1.Inquire about location service.
 
